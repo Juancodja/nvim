@@ -100,8 +100,6 @@ vim.g.have_nerd_font = false
 
 -- Make line numbers default
 vim.o.number = true
--- You can also add relative line numbers, to help with jumping.
---  Experiment for yourself to see if you like it!
 vim.o.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
@@ -154,7 +152,10 @@ vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
-
+vim.opt.foldmethod = 'indent'
+vim.opt.foldenable = true
+vim.opt.foldnestmax = 3
+vim.opt.foldlevelstart = 99
 -- Preview substitutions live, as you type!
 vim.o.inccommand = 'split'
 
@@ -479,7 +480,7 @@ require('lazy').setup({
     },
   },
   {
-    -- Main LSP Configuration
+    -- Main LSP Configuration0
     'neovim/nvim-lspconfig',
     dependencies = {
       -- Automatically install LSPs and related tools to stdpath for Neovim
@@ -1017,3 +1018,17 @@ require('lazy').setup({
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+--
+
+require('lazy').setup {
+  { 'nvim-lua/plenary.nvim' },
+  { 'nvim-telescope/telescope.nvim', tag = '0.1.1' },
+}
+
+local builtin = require 'telescope.builtin'
+local opts = { noremap = true, silent = true }
+
+vim.keymap.set('n', '<leader>ff', builtin.find_files, opts)
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, opts)
+vim.keymap.set('n', '<leader>fb', builtin.buffers, opts)
+vim.keymap.set('n', '<leader>fc', builtin.commands, opts)

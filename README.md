@@ -92,16 +92,13 @@ If you're using `powershell.exe`
 ```
 git clone https://github.com/nvim-lua/kickstart.nvim.git "${env:LOCALAPPDATA}\nvim"
 ```
-
-</details>
+ails>
 
 ### Post Installation
 
 Start Neovim
 
 ```sh
-nvim
-```
 
 That's it! Lazy will install all the plugins you have. Use `:Lazy` to view
 the current plugin status. Hit `q` to close the window.
