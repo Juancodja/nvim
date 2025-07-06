@@ -155,8 +155,14 @@ vim.opt.foldmethod = 'indent'
 vim.opt.foldenable = true
 vim.opt.foldnestmax = 3
 vim.opt.foldlevelstart = 99
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 vim.opt.listchars = { multispace = '···>', trail = '·', nbsp = ' ' }
+vim.opt.listchars = {
+  tab = '» ', -- flecha y espacio para tabs
+  multispace = '···>', -- espacios múltiples
+  trail = '·', -- espacios finales
+  nbsp = '␣', -- espacios no separables
+}
+
 -- Preview substitutions live, as you type!
 vim.o.inccommand = 'split'
 
