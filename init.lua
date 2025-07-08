@@ -147,7 +147,7 @@ vim.o.splitbelow = true
 --  It is very similar to `vim.o` but offers an interface for conveniently interacting with tables.
 --   See `:help lua-options`
 --   and `:help lua-options-guide`
-vim.o.list = true
+vim.o.list = false
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
@@ -155,7 +155,6 @@ vim.opt.foldmethod = 'indent'
 vim.opt.foldenable = true
 vim.opt.foldnestmax = 3
 vim.opt.foldlevelstart = 99
-vim.opt.listchars = { multispace = '···>', trail = '·', nbsp = ' ' }
 vim.opt.listchars = {
   tab = '» ', -- flecha y espacio para tabs
   multispace = '···>', -- espacios múltiples
@@ -1026,3 +1025,4 @@ require('lazy').setup({
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
 --
+vim.api.nvim_set_keymap('n', '<CR>', [[:put = ''<CR>]], { noremap = true, silent = true })
