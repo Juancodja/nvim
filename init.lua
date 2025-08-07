@@ -412,23 +412,32 @@ require('lazy').setup({
       -- do as well as how to actually do it!
 
       -- [[ Configure Telescope ]]
-      -- See `:help telescope` and `:help telescope.setup()`
       require('telescope').setup {
-        -- You can put your default mappings / updates / etc. in here
-        --  All the info you're looking for is in `:help telescope.setup()`
-        --
-        -- defaults = {
-        --   mappings = {
-        --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-        --   },
-        -- },
-        -- pickers = {}
+        defaults = {
+          layout_strategy = 'horizontal',
+          layout_config = {
+            horizontal = {
+              width = 0.9,
+              height = 0.85,
+              preview_width = 0.6,
+            },
+            vertical = {
+              width = 0.9,
+              height = 0.9,
+              preview_height = 0.6,
+            },
+          },
+          -- Optional: puedes agregar mappings si quieres
+          -- mappings = {
+          --   i = { ['<c-enter>'] = 'to_fuzzy_refine' },
+          -- },
+        },
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
           },
         },
-      }
+      } -- See `:help telescope` and `:help telescope.setup()`
 
       -- Enable Telescope extensions if they are installed
       pcall(require('telescope').load_extension, 'fzf')
@@ -448,12 +457,18 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
       -- Slightly advanced example of overriding default behavior and theme
+      --
       vim.keymap.set('n', '<leader>/', function()
         -- You can pass additional configuration to Telescope to change the theme, layout, etc.
-        builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-          winblend = 10,
+        builtin.current_buffer_fuzzy_find {
+          layout_strategy = 'horizontal',
+          layout_config = {
+            width = 0.9,
+            height = 0.85,
+          },
           previewer = false,
-        })
+          winblend = 10,
+        }
       end, { desc = '[/] Fuzzily search in current buffer' })
 
       -- It's also possible to pass additional configuration options.
