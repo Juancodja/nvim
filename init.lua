@@ -108,14 +108,6 @@ vim.o.mouse = 'a'
 -- Don't show the mode, since it's already in the status line
 vim.o.showmode = false
 
--- Sync clipboard between OS and Neovim.
---  Schedule the setting after `UiEnter` because it can increase startup-time.
---  Remove this option if you want your OS clipboard to remain independent.
---  See `:help 'clipboard'`
-vim.schedule(function()
-  vim.o.clipboard = 'unnamedplus'
-end)
-
 -- Enable break indent
 vim.o.breakindent = true
 
@@ -281,6 +273,7 @@ require('lazy').setup({
   -- options to `gitsigns.nvim`.
   --
   -- See `:help gitsigns` to understand what the configuration keys do
+  { 'ojroques/nvim-osc52', opts = {} },
   { -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
     opts = {
@@ -1042,3 +1035,39 @@ require('lazy').setup({
 --
 vim.api.nvim_set_keymap('n', '<CR>', [[:put = ''<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<BS>', 'X', { noremap = true, silent = true })
+
+-- === Clipboard por OSC52 en SSH, clipboard normal en local ===
+local using_ssh = vim.env.SSH_CONNECTION ~= nil
+
+-- Funciones de copia/pega para g:clipboard con OSC52
+local function osc52_copy(lines, _)
+  require('osc52').copy(table.concat(lines, '\n'))
+end
+local function osc52_paste()
+  -- pegamos desde el registro + (sistema) si el terminal lo dejó allí
+  return vim.split(vim.fn.getreg '+', '\n'), vim.fn.getregtype '+'
+end
+
+if using_ssh then
+  -- No uses unnamedplus (invocaría xclip). Usa proveedor OSC52.
+  vim.o.clipboard = ''
+  vim.g.clipboard = {
+    name = 'osc52',
+    copy = { ['+'] = osc52_copy, ['*'] = osc52_copy },
+    paste = { ['+'] = osc52_paste, ['*'] = osc52_paste },
+  }
+
+  -- (Opcional) copia automática al portapapeles al yank (y, yy, etc.)
+  -- Evita confundir con tu autocomando de highlight existente: usa otro grupo.
+  vim.api.nvim_create_autocmd('TextYankPost', {
+    group = vim.api.nvim_create_augroup('osc52-yank', { clear = true }),
+    callback = function()
+      if vim.v.event.operator == 'y' and vim.v.event.regname == '' then
+        require('osc52').copy_register '"' -- yank por defecto
+      end
+    end,
+  })
+else
+  -- En local: clipboard del SO como siempre
+  vim.o.clipboard = 'unnamedplus'
+end
