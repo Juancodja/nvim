@@ -878,8 +878,6 @@ require('lazy').setup({
         },
       },
 
-      snippets = { expand = function () end },
-
       -- Blink.cmp includes an optional, recommended rust fuzzy matcher,
       -- which automatically downloads a prebuilt binary when enabled.
       --
