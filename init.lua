@@ -1069,3 +1069,11 @@ else
   -- En local: clipboard del SO como siempre
   vim.o.clipboard = 'unnamedplus'
 end
+
+vim.opt.wrap = true
+vim.opt.linebreak = true
+vim.opt.breakindent = true
+vim.opt.showbreak = '↳ '
+vim.opt.colorcolumn = '120'
+
+vim.api.nvim_set_hl(0, 'ColorColumn', { bg = '#968932' })
