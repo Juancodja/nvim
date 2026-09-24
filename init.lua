@@ -1084,3 +1084,16 @@ vim.opt.showbreak = '↳ '
 vim.opt.colorcolumn = '120'
 
 vim.api.nvim_set_hl(0, 'ColorColumn', { bg = '#968932' })
+
+vim.opt.spell = true
+vim.opt.spelllang = { 'es' }
+
+vim.api.nvim_set_hl(0, 'SpellBad', { fg = '#ffffff', bg = '#ff0000', underline = true })
+vim.api.nvim_set_hl(0, 'SpellCap', { fg = '#ffffff', bg = '#0000ff', underline = true })
+vim.api.nvim_set_hl(0, 'SpellRare', { fg = '#ffffff', bg = '#ff00ff', underline = true })
+vim.api.nvim_set_hl(0, 'SpellLocal', { fg = '#ffffff', bg = '#00ffff', underline = true })
+
+vim.o.autoread = true
+vim.api.nvim_create_autocmd({ 'BufEnter', 'CursorHold', 'CursorHoldI', 'FocusGained' }, {
+  command = "if mode() != 'c' | checktime | endif",
+})
