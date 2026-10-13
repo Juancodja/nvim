@@ -896,7 +896,7 @@ do
       -- <c-k>: Toggle signature help
       --
       -- See `:help blink-cmp-config-keymap` for defining your own keymap
-      preset = 'default',
+      preset = 'super-tab', -- CUSTOM: can't be overridden after setup()
 
       -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
       --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
@@ -1033,6 +1033,15 @@ do
   -- require 'custom.plugins.colorscheme'
   -- require 'custom.plugins.ui'
   -- require 'custom.plugins.git'
+
+  -- CUSTOM: personal settings
+  require 'custom.options'
+  require 'custom.highlights'
+  require 'custom.spell'
+  require 'custom.keymaps'
+  require 'custom.clipboard'
+  require 'custom.telescope'
+  require 'custom.lsp'
 end
 
 -- The line beneath this is called `modeline`. See `:help modeline`
